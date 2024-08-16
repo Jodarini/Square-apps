@@ -19,7 +19,7 @@ const squares = [
 
 <template>
   <main>
-    <SquareComp v-for="square in squares" :key="square.id"></SquareComp>
+    <SquareComp v-for="square in squares" :key="square.id" :color="square.color"></SquareComp>
   </main>
 </template>
 

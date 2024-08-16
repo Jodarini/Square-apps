@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+const props = defineProps({
+  color: String
+})
 
-const isRed = ref('red')
+const isRed = ref(props.color === 'red')
 </script>
 
 <template>
@@ -13,6 +16,7 @@ div {
   width: 50px;
   height: 50px;
   background: green;
+  color: red;
 }
 
 .red {
