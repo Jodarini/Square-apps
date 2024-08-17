@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
+
 const props = defineProps({
-  color: String
+  color: String,
+  id: String
 })
 
-const isRed = ref(props.color === 'red')
+const emit = defineEmits(['changeColor'])
+
+function changeLocalColor() {
+  const newColor = props.color === 'red' ? 'green' : 'red'
+  emit('changeColor', newColor, props.id)
+}
+const squareClass = computed(() => ({
+  'red-square': props.color === 'red',
+  'green-square': props.color === 'green'
+}))
 </script>
 
 <template>
-  <div :class="{ red: isRed }"></div>
+  <div @click="changeLocalColor" :class="squareClass"></div>
 </template>
 
 <style scoped>
@@ -19,11 +30,11 @@ div {
   color: red;
 }
 
-.red {
+.red-square {
   background: red;
 }
 
-.green {
+.green-square {
   background: green;
 }
 </style>
