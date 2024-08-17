@@ -2,7 +2,12 @@
 import { ref } from 'vue'
 import SquareComp from './components/SquareComp.vue'
 
-const squares = ref([
+interface Square {
+  id: string
+  color: string
+}
+
+const squares = ref<Square[]>([
   {
     id: crypto.randomUUID(),
     color: 'green'
@@ -21,10 +26,14 @@ const squares = ref([
   }
 ])
 
-const updateSquareColor = (id: string, newColor: string) => {
-  const square = squares.value.find((s) => s.id === id)
-  if (square) {
-    square.color = newColor
+const updateSquareColor = (id: string) => {
+  const squareIndex = squares.value.findIndex((s) => s.id === id)
+  const curColor = squares.value[squareIndex].color
+  if (curColor === 'red') {
+    squares.value.splice(squareIndex, 1)
+  } else {
+    squares.value[squareIndex].color = 'red'
+    squares.value.push({ id: crypto.randomUUID(), color: 'green' })
   }
 }
 </script>
@@ -36,7 +45,7 @@ const updateSquareColor = (id: string, newColor: string) => {
       :key="square.id"
       :id="square.id"
       :color="square.color"
-      @changeColor="updateSquareColor(square.id, $event)"
+      @changeColor="updateSquareColor(square.id)"
     ></SquareComp>
   </main>
 </template>

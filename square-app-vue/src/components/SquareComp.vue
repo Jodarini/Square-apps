@@ -10,7 +10,7 @@ const emit = defineEmits(['changeColor'])
 
 function changeLocalColor() {
   const newColor = props.color === 'red' ? 'green' : 'red'
-  emit('changeColor', newColor, props.id)
+  emit('changeColor', { newColor, id: props.id })
 }
 const squareClass = computed(() => ({
   'red-square': props.color === 'red',
